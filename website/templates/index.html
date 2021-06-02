@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/18ebc54422.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Weather App</title>
+  </head>
+  <body>
+    <nav class="nav navbar-dark bg-dark text-start text-white">
+      <div class="container">
+        <h1>Weather</h1>
+      </div>
+    </nav>
+    <br />
+    <br />
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col col-sm-4 md-col-offset-3">
+          <form method="post" class="col-md-12 col-md-offset-3">
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                name="city"
+                placeholder="Search City"
+              />
+              <div class="input-group-btn">
+                <button class="btn btn-primary" type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+          <div class="card my-5">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>
+                    {% if data != "City Not Found" %}
+
+                    <h5>{{data.cityname}}, {{ data.country_code }}</h5>
+                    <b class="text-capitalize"
+                      ><i> {{ data.description }}</i></b
+                    >
+                    <img
+                      src="http://openweathermap.org/img/wn/{{ data.icon
+                  }}@2x.png"
+                      alt="{{data.description}}"
+                      width="50"
+                      height="50"
+                    />
+                    <p>
+                      Temperature:
+                      <span class="badge bg-dark">{{ data.temp }}&deg;C</span>
+                      Feels Like:
+                      <span class="badge bg-dark"
+                        >{{ data.feels_like }}&deg;C</span
+                      >
+                      <br />
+                      Low: {{ data.temp_min }}&deg;C <br />
+                      High: {{ data.temp_max }}&deg;C
+                      <br />
+                      Pressure : {{ data.pressure }}
+                      <br />
+                      Humidity : {{ data.humidity }}%
+                      <br />
+                      Cloud Cover: {{ data.cloud_cover }}%
+                      <br />
+                      Wind Speed: {{ data.wind_speed }} m/s
+                    </p>
+                    {% else %}
+                    <p>{{ data }}</p>
+                    {% endif %}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
