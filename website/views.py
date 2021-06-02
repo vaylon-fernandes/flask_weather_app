@@ -1,7 +1,5 @@
 from flask import render_template, redirect, request
 from flask.blueprints import Blueprint
-from os import environ
-import json
 import requests
 from dotenv import dotenv_values
 
