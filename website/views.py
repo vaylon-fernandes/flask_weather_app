@@ -1,11 +1,15 @@
+from os import environ
 from flask import render_template, redirect, request
 from flask.blueprints import Blueprint
 import requests
 from dotenv import dotenv_values
 
 views = Blueprint('views', __name__)
-load_env = dotenv_values(".env")
-API_KEY = load_env["API_KEY"]
+try:
+    load_env = dotenv_values(".env")
+    API_KEY = load_env["API_KEY"]
+except KeyError:
+    API_KEY = environ.get("API_KEY")
 
 
 def required_data(data_from_source):
