@@ -15,16 +15,58 @@
       src="https://kit.fontawesome.com/18ebc54422.js"
       crossorigin="anonymous"
     ></script>
+    <!-- This favicon was generated using the following font:
+
+- Font Title: Cabin Condensed
+- Font Author: Copyright 2016 The Cabin Project Authors (impallari@gmail.com)
+- Font Source: http://fonts.gstatic.com/s/cabincondensed/v14/nwpMtK6mNhBK2err_hqkYhHRqmwaYOjZ5HZl8Q.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL) -->
+
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{{ url_for('static', filename='apple-touch-icon.png')  }}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{{ url_for('static', filename='favicon-32x32.png') }}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{{ url_for('static',filename='favicon-16x16.png') }}"
+    />
+    <link
+      rel="manifest"
+      href="{{ url_for('static', filename='site.webmanifest') }}"
+    />
     <title>Weather App</title>
   </head>
   <body>
-    <nav class="nav navbar-dark bg-dark text-start text-white">
-      <div class="container">
-        <h1>Weather</h1>
+    <style>
+      .nav-link {
+        color: #ffff;
+      }
+    </style>
+    <nav class="navbar navbar-dark bg-dark text-start text-white mb-4">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/"> Weather </a>
+        <span class="nav-item">
+          <a
+            href="https://github.com/vaylon-fernandes/flask_weather_app"
+            target="_blank"
+            class="nav-link active"
+          >
+            Github Repo
+            <i class="fab fa-github"></i>
+          </a>
+        </span>
       </div>
     </nav>
-    <br />
-    <br />
+
     <div class="container">
       <div class="row justify-content-center">
         <div class="col col-sm-4 md-col-offset-3">
@@ -32,9 +74,10 @@
             <div class="input-group">
               <input
                 type="text"
-                class="form-control"
+                class="form-control me-1"
                 name="city"
                 placeholder="Search City"
+                aria-label="Search City"
               />
               <div class="input-group-btn">
                 <button class="btn btn-primary" type="submit">
@@ -43,50 +86,46 @@
               </div>
             </div>
           </form>
-          <div class="card my-5">
-            <table class="table">
-              <tbody>
-                <tr>
-                  <td>
-                    {% if data != "City Not Found" %}
+          <div class="card my-5 border-dark">
+            <div class="card-body">
+              {% if data != "City Not Found" %}
+              <img
+                src="http://openweathermap.org/img/wn/{{ data.icon
+            }}@2x.png"
+                alt="{{data.description}}"
+                height="75"
+                width="75"
+              />
+              <h5 class="card-title">
+                {{data.cityname}}, {{ data.country_code }}
+              </h5>
 
-                    <h5>{{data.cityname}}, {{ data.country_code }}</h5>
-                    <b class="text-capitalize"
-                      ><i> {{ data.description }}</i></b
-                    >
-                    <img
-                      src="http://openweathermap.org/img/wn/{{ data.icon
-                  }}@2x.png"
-                      alt="{{data.description}}"
-                      width="50"
-                      height="50"
-                    />
-                    <p>
-                      Temperature:
-                      <span class="badge bg-dark">{{ data.temp }}&deg;C</span>
-                      Feels Like:
-                      <span class="badge bg-dark"
-                        >{{ data.feels_like }}&deg;C</span
-                      >
-                      <br />
-                      Low: {{ data.temp_min }}&deg;C <br />
-                      High: {{ data.temp_max }}&deg;C
-                      <br />
-                      Pressure : {{ data.pressure }}
-                      <br />
-                      Humidity : {{ data.humidity }}%
-                      <br />
-                      Cloud Cover: {{ data.cloud_cover }}%
-                      <br />
-                      Wind Speed: {{ data.wind_speed }} m/s
-                    </p>
-                    {% else %}
-                    <p>{{ data }}</p>
-                    {% endif %}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+              <h6 class="text-capitalize card-text">
+                <i> {{ data.description }} </i>
+              </h6>
+
+              <p class="card-text">
+                Temperature:
+                <span class="badge bg-dark">{{ data.temp }}&deg;C</span>
+                <br />
+                Feels Like:
+                <span class="badge bg-dark">{{ data.feels_like }}&deg;C</span>
+                <br />
+                Low: {{ data.temp_min }}&deg;C <br />
+                High: {{ data.temp_max }}&deg;C
+                <br />
+                Pressure : {{ data.pressure }}
+                <br />
+                Humidity : {{ data.humidity }}%
+                <br />
+                Cloud Cover: {{ data.cloud_cover }}%
+                <br />
+                Wind Speed: {{ data.wind_speed }} m/s
+              </p>
+              {% else %}
+              <p class="card-text">{{ data }}</p>
+              {% endif %}
+            </div>
           </div>
         </div>
       </div>
