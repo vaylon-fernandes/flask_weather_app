@@ -24,7 +24,6 @@ def required_data(data_from_source):
     wind_speed = str(data_from_source['wind']['speed'])
     country_code = str(data_from_source["sys"]["country"])
     cityname = str(data_from_source["name"])
-    response = str(data_from_source['cod'])
 
     data = {
         "coordinates": coordinates,
@@ -40,7 +39,6 @@ def required_data(data_from_source):
         "wind_speed": wind_speed,
         "country_code": country_code,
         "cityname": cityname,
-        "response": response
     }
     return data
 
@@ -52,11 +50,16 @@ def weather():
     else:
         city = "Madgaon"
 
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&units=metric&appid={API_KEY}"
-    data_from_source = requests.get(url).json()
-    try:
-        data_to_client = required_data(data_from_source)
-    except KeyError:
+    url = f"http://api.openweathermap.org/data/2.5/find?q={city}&units=metric&appid={API_KEY}"
+
+    get_data = requests.get(url).json()
+    cities = get_data["list"]
+    count = get_data["count"]
+    if cities:
+        data_to_client = []
+        for city_data in cities:
+            data_to_client.append(required_data(city_data))
+    else:
         data_to_client = "City Not Found"
 
-    return render_template('index.html', data=data_to_client)
+    return render_template('index.html', data=data_to_client, count=count, city=city)

@@ -67,10 +67,10 @@
       </div>
     </nav>
 
-    <div class="container">
+    <div class="container-fluid" id="cardContainer">
       <div class="row justify-content-center">
         <div class="col col-sm-4 md-col-offset-3">
-          <form method="post" class="col-md-12 col-md-offset-3">
+          <form method="post">
             <div class="input-group">
               <input
                 type="text"
@@ -86,9 +86,17 @@
               </div>
             </div>
           </form>
+
+          {% if data != "City Not Found" %} {% if count > 1 %}
+          <p>
+            Found 5 cities with the name {{city}}. For your search to be more
+            accurate enter the "cityname, two character countrycode". For
+            Example Delhi, IN
+          </p>
+          {% endif %} {% for data in data %}
+
           <div class="card my-5 border-dark">
             <div class="card-body">
-              {% if data != "City Not Found" %}
               <img
                 src="http://openweathermap.org/img/wn/{{ data.icon
             }}@2x.png"
@@ -121,12 +129,16 @@
                 Cloud Cover: {{ data.cloud_cover }}%
                 <br />
                 Wind Speed: {{ data.wind_speed }} m/s
+                <br />
+                Geo Coordinates: {{ data.coordinates}}
               </p>
-              {% else %}
-              <p class="card-text">{{ data }}</p>
-              {% endif %}
             </div>
           </div>
+          {% endfor %} {% else %}
+          <p class="card-text">
+            {{ data }}. Please check your spelling and retry
+          </p>
+          {% endif %}
         </div>
       </div>
     </div>
