@@ -66,16 +66,80 @@
         </span>
       </div>
     </nav>
+    <!-- flash alerts -->
+    {% with messages=get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %} {% if category=="Error"
+    %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    {% elif category == "Info" %}
+    <div
+      class="
+        alert alert-info alert-dismissible
+        d-flex
+        align-items-center
+        fade
+        show
+      "
+      role="alert"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="currentColor"
+        class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"
+        viewBox="0 0 16 16"
+        role="img"
+        aria-label="Warning:"
+      >
+        <path
+          d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+        />
+      </svg>
+      <div
+        id="{{
+        city
+        }}"
+      >
+        {{ message }}
+      </div>
 
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alert-dismissable fade show" role="alert">
+      {{ message }}
+
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %} {% endfor %} {% endif %} {% endwith %}
+    <!-- container  -->
     <div class="container-fluid" id="cardContainer">
       <div class="row justify-content-center">
         <div class="col col-sm-4 md-col-offset-3">
-          <form method="post">
+          <!-- form  -->
+          <form method="post" id="cityForm" action="/">
             <div class="input-group">
               <input
                 type="text"
                 class="form-control me-1"
                 name="city"
+                id="city"
                 placeholder="Search City"
                 aria-label="Search City"
               />
@@ -87,51 +151,51 @@
             </div>
           </form>
 
-          {% if data != "City Not Found" %} {% if count > 1 %}
-          <p>
-            Found 5 cities with the name {{city}}. For your search to be more
-            accurate enter the "cityname, two character countrycode". For
-            Example Delhi, IN
-          </p>
-          {% endif %} {% for data in data %}
+          {% if data != "City Not Found" %} {% for data in data %}
 
           <div class="card my-5 border-dark">
             <div class="card-body">
-              <img
-                src="http://openweathermap.org/img/wn/{{ data.icon
-            }}@2x.png"
-                alt="{{data.description}}"
-                height="75"
-                width="75"
-              />
               <h5 class="card-title">
                 {{data.cityname}}, {{ data.country_code }}
               </h5>
-
-              <h6 class="text-capitalize card-text">
-                <i> {{ data.description }} </i>
-              </h6>
-
-              <p class="card-text">
-                Temperature:
-                <span class="badge bg-dark">{{ data.temp }}&deg;C</span>
-                <br />
-                Feels Like:
-                <span class="badge bg-dark">{{ data.feels_like }}&deg;C</span>
-                <br />
-                Low: {{ data.temp_min }}&deg;C <br />
-                High: {{ data.temp_max }}&deg;C
-                <br />
-                Pressure : {{ data.pressure }}
-                <br />
-                Humidity : {{ data.humidity }}%
-                <br />
-                Cloud Cover: {{ data.cloud_cover }}%
-                <br />
-                Wind Speed: {{ data.wind_speed }} m/s
-                <br />
-                Geo Coordinates: {{ data.coordinates}}
-              </p>
+              <div class="row row-cols-auto">
+                <div class="col">
+                  <p class="text-capitalize card-text fw-bold fst-italic my-4">
+                    {{ data.description }}
+                  </p>
+                </div>
+                <div class="col">
+                  <img
+                    src="http://openweathermap.org/img/wn/{{ data.icon
+            }}@2x.png"
+                    alt="{{data.description}}"
+                    height="75"
+                    width="75"
+                  />
+                </div>
+              </div>
+              <div class="row-cols-auto">
+                <p class="card-text col">
+                  Temperature:
+                  <span class="badge bg-dark">{{ data.temp }}&deg;C</span>
+                  <br />
+                  Feels Like:
+                  <span class="badge bg-dark">{{ data.feels_like }}&deg;C</span>
+                  <br />
+                  Low: {{ data.temp_min }}&deg;C <br />
+                  High: {{ data.temp_max }}&deg;C
+                  <br />
+                  Pressure : {{ data.pressure }}
+                  <br />
+                  Humidity : {{ data.humidity }}%
+                  <br />
+                  Cloud Cover: {{ data.cloud_cover }}%
+                  <br />
+                  Wind Speed: {{ data.wind_speed }} m/s
+                  <br />
+                  Geo Coordinates: {{ data.coordinates}}
+                </p>
+              </div>
             </div>
           </div>
           {% endfor %} {% else %}
@@ -149,5 +213,12 @@
       integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
       crossorigin="anonymous"
     ></script>
+    <script>
+      let city = document.getElementById("{{ city }}").innerHTML;
+      let link =
+        '<a href="/{{ city }}/{{ country }}" class="alert-link">{{ city }}, {{ country }}</a>';
+      let new_alert = `${city} ${link}`;
+      document.getElementById("{{ city }}").innerHTML = new_alert;
+    </script>
   </body>
 </html>
