@@ -142,6 +142,7 @@
                 id="city"
                 placeholder="Search City"
                 aria-label="Search City"
+                required
               />
               <div class="input-group-btn">
                 <button class="btn btn-primary" type="submit">
@@ -174,28 +175,26 @@
                   />
                 </div>
               </div>
-              <div class="row-cols-auto">
-                <p class="card-text col">
-                  Temperature:
-                  <span class="badge bg-dark">{{ data.temp }}&deg;C</span>
-                  <br />
-                  Feels Like:
-                  <span class="badge bg-dark">{{ data.feels_like }}&deg;C</span>
-                  <br />
-                  Low: {{ data.temp_min }}&deg;C <br />
-                  High: {{ data.temp_max }}&deg;C
-                  <br />
-                  Pressure : {{ data.pressure }}
-                  <br />
-                  Humidity : {{ data.humidity }}%
-                  <br />
-                  Cloud Cover: {{ data.cloud_cover }}%
-                  <br />
-                  Wind Speed: {{ data.wind_speed }} m/s
-                  <br />
-                  Geo Coordinates: {{ data.coordinates}}
-                </p>
-              </div>
+              <p class="card-text">
+                Temperature:
+                <span class="badge bg-dark">{{ data.temp }}&deg;C</span>
+                <br />
+                Feels Like:
+                <span class="badge bg-dark">{{ data.feels_like }}&deg;C</span>
+                <br />
+                Low: {{ data.temp_min }}&deg;C <br />
+                High: {{ data.temp_max }}&deg;C
+                <br />
+                Pressure : {{ data.pressure }}
+                <br />
+                Humidity : {{ data.humidity }}%
+                <br />
+                Cloud Cover: {{ data.cloud_cover }}%
+                <br />
+                Wind Speed: {{ data.wind_speed }} m/s
+                <br />
+                Geo Coordinates: {{ data.coordinates}}
+              </p>
             </div>
           </div>
           {% endfor %} {% else %}
