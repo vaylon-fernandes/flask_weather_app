@@ -3,7 +3,6 @@ from flask import render_template, redirect, request, flash
 from flask.blueprints import Blueprint
 from flask.scaffold import F
 import requests
-from .forms import CityForm
 
 
 views = Blueprint('views', __name__)
@@ -55,17 +54,13 @@ def form_is_empmty(form):
 @views.route('/<city_name>', methods=['GET', 'POST'])
 @views.route('/<city_name>/<country_name>', methods=['GET', 'POST'])
 def weather(city_name=None, country_name=None):
-    form = CityForm(request.form)
     if city_name and country_name:
         city = f"{city_name},{country_name}"
     elif city_name:
         city = city_name
     else:
         if request.method == "POST":
-
             city = request.form['city']
-            if form_is_empmty(city) and not form.validate():
-                flash('Please enter a City name')
         else:
             city = "Madgaon"
 
