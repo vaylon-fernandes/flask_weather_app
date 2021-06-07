@@ -39,8 +39,30 @@ Install dependencies
 ```bash
   pip install -r requirements.txt
 ```
+I addition to the dependancies you wil have to create a [Open Weather Map](https://openweathermap.org/) and get a `API Key`. Read about how to get a 'API Key' in the open weather mao FAQ section [here](https://openweathermap.org/faq)
 
-#### Running the app 
+## Configuring environment Variables
+- Firstly Generate a `Secret Key`. This is required by the Flask [Sessions](https://flask.palletsprojects.com/en/2.0.x/quickstart/#sessions). 
+Do read the section on  ***How to generate good secret keys***  in the flask documentation under 
+sessions [here](https://flask.palletsprojects.com/en/2.0.x/quickstart/#sessions)
+- Next export the secret key and API key to Enviroment Variables using one of the following commands based on your terminal
+Bash command 
+```bash
+  export SECRET_KEY=<your secret key>
+  export API_KEY=<your API key>
+```
+CMD command
+```bash
+  set SECRET_KEY=<your secret key>
+  set API_KEY=<your API key>
+```
+Powershell command
+```powershell
+  $env:SECRET_KEY=<your secret key>
+  $env:API_KEY=<your API key>
+```
+The enviroment variables are then read using the [os.environ object](https://www.geeksforgeeks.org/python-os-environ-object/)
+## Running the app 
 To run the app, first export the `FLASK_APP` variable, using one of the following commands based on your terminal<br>
 Bash command 
 ```bash
@@ -54,6 +76,8 @@ Powershell command
 ```powershell
   $env:FLASK_APP = "hello"
 ```
+
+
 #### Run command
 ```bash
 flask run
@@ -79,4 +103,11 @@ flask run
 ```
 Read more here: https://flask.palletsprojects.com/en/2.0.x/quickstart/#debug-mode
 
-  
+## Deploying to Heroku
+- There's a good explanation of this given in this [repo](https://github.com/MirelaI/flask_heroku_example)
+- Another good read on the topic is on the Real Python [website](https://realpython.com/flask-by-example-part-1-project-setup/) 
+
+## References
+- Open Weather Map Current Weather Map API Docs - https://openweathermap.org/current
+- Flask Docs - https://flask.palletsprojects.com/en/2.0.x/
+- Bootstrap Docs - https://getbootstrap.com/docs/5.0/getting-started/introduction/
