@@ -8,8 +8,6 @@ A minimal Weather app built using Flask and Bootstrap
 
 See a live version deployed on heroku [here](https://weatherappfh.herokuapp.com/)
 
-
-  
 ## Run Locally
 
 Clone the project
@@ -29,17 +27,24 @@ Create a virtual enviroment. [Read more](https://realpython.com/python-virtual-e
 ```
 #### Note: Linux user might have to install venv using the following command
 
-Activate the virtual environment 
 ```bash
    apt-get install python3-venv
 ```
-
+#### Activate the virtual environment 
+On Linux:
+```bash 
+source venv/bin/activate
+```
+On Windows:
+```bash
+venv\Scripts\activate
+```
 Install dependencies
 
 ```bash
   pip install -r requirements.txt
 ```
-I addition to the dependancies you wil have to create a [Open Weather Map](https://openweathermap.org/) and get a `API Key`. Read about how to get a 'API Key' in the open weather mao FAQ section [here](https://openweathermap.org/faq)
+In addition to the dependancies you wil have to create a [Open Weather Map](https://openweathermap.org/) and get a `API Key`. Read about how to get a 'API Key' in the open weather mao FAQ section [here](https://openweathermap.org/faq)
 
 ## Configuring environment Variables
 - Firstly Generate a `Secret Key`. This is required by the Flask [Sessions](https://flask.palletsprojects.com/en/2.0.x/quickstart/#sessions). 
