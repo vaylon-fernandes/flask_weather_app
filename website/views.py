@@ -1,13 +1,10 @@
-from os import environ
-from flask import render_template, redirect, request, flash
-from flask.blueprints import Blueprint
-from flask.scaffold import F
+from . import API_KEY
 import requests
+from flask import render_template, request, flash, jsonify, make_response
+from flask.blueprints import Blueprint
 
 
 views = Blueprint('views', __name__)
-
-API_KEY = environ.get("API_KEY")
 
 
 def required_data(data_from_source):
@@ -25,7 +22,7 @@ def required_data(data_from_source):
     humidity = str(data_from_source['main']['humidity'])
     wind_speed = str(data_from_source['wind']['speed'])
     country_code = str(data_from_source["sys"]["country"])
-    cityname = str(data_from_source["name"])
+    city_name = str(data_from_source["name"])
 
     data = {
         "coordinates": coordinates,
@@ -40,14 +37,9 @@ def required_data(data_from_source):
         "cloud_cover": cloud_cover,
         "wind_speed": wind_speed,
         "country_code": country_code,
-        "cityname": cityname,
+        "city_name": city_name,
     }
     return data
-
-
-def form_is_empmty(form):
-    result = form == ''
-    return result
 
 
 @views.route('/', methods=['GET', 'POST'])
@@ -64,7 +56,7 @@ def weather(city_name=None, country_name=None):
         else:
             city = "Madgaon"
 
-    url = f"http://api.openweathermap.org/data/2.5/find?q={city}&units=metric&appid={API_KEY}"
+    url = f"https://api.openweathermap.org/data/2.5/find?q={city}&units=metric&appid={API_KEY}"
 
     get_data = requests.get(url).json()
     cities = get_data["list"]
@@ -78,11 +70,10 @@ def weather(city_name=None, country_name=None):
         data_to_client = "City Not Found"
 
     if count > 1:
+        flash(f"Found {count} results with the name {city}", category="Info")
 
-        flash(
-            f'''Found {count} cities with the name {cities[0]['name']}. 
-            For your search to be more accurate enter  
-            'cityname, two character countrycode'. 
-            For Example, ''', category="Info")
-
-    return render_template('index.html', data=data_to_client, count=count, city=city, country=cities[0]["sys"]["country"])
+    return render_template('index.html',
+                           data=data_to_client,
+                           count=count,
+                           city=city,
+                           )
