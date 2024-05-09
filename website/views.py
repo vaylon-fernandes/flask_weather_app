@@ -46,15 +46,10 @@ def required_data(data_from_source):
 @views.route('/<city_name>', methods=['GET', 'POST'])
 @views.route('/<city_name>/<country_name>', methods=['GET', 'POST'])
 def weather(city_name=None, country_name=None):
-    if city_name and country_name:
-        city = f"{city_name},{country_name}"
-    elif city_name:
-        city = city_name
+    if request.method == "POST":
+        city = request.values['city']
     else:
-        if request.method == "POST":
-            city = request.form['city']
-        else:
-            city = "Madgaon"
+        city = "Madgaon"
 
     url = f"https://api.openweathermap.org/data/2.5/find?q={city}&units=metric&appid={API_KEY}"
 
@@ -71,7 +66,7 @@ def weather(city_name=None, country_name=None):
 
     if count > 1:
         flash(f"Found {count} results with the name {city}", category="Info")
-
+    print(data_to_client)
     return render_template('index.html',
                            data=data_to_client,
                            count=count,
